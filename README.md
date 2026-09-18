@@ -1,27 +1,34 @@
 <div align="center">
 
-# 🇧🇩 Bangladesh Geocode
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:006A4E,100:F42A41&height=200&section=header&text=Bangladesh%20Geocode&fontSize=48&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=Open%20Geographic%20Data%20for%20Bangladesh%20-%202D%20and%203D%20Ready&descAlignY=58&descSize=16" width="100%" alt="Bangladesh Geocode banner"/>
 
-### The complete, open-source administrative & geographic dataset for Bangladesh
+<img src="https://github.com/bayeziddev.png?size=110" width="88" style="border-radius:50%" alt="Sayad Md Bayezid Hosan"/>
 
-Division → District → Upazila → Union, with bilingual names, coordinates, and district-level GeoJSON boundaries — ready for address forms, dashboards, and real 2D/3D map rendering.
+### by [@bayeziddev](https://github.com/bayeziddev) — Sayad Md Bayezid Hosan
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub stars](https://img.shields.io/github/stars/bayeziddev/Bangladesh-geocode?style=flat&color=006A4E)](https://github.com/bayeziddev/Bangladesh-geocode/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/bayeziddev/Bangladesh-geocode?style=flat&color=F42A41)](https://github.com/bayeziddev/Bangladesh-geocode/network/members)
-[![Open issues](https://img.shields.io/github/issues/bayeziddev/Bangladesh-geocode)](https://github.com/bayeziddev/Bangladesh-geocode/issues)
-[![Last commit](https://img.shields.io/github/last-commit/bayeziddev/Bangladesh-geocode)](https://github.com/bayeziddev/Bangladesh-geocode/commits/main)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#-contributing)
-[![Made in Bangladesh](https://img.shields.io/badge/Made%20in-Bangladesh-006A4E)](https://github.com/bayeziddev)
+<img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&size=22&pause=1000&color=006A4E&center=true&vCenter=true&width=650&lines=5%2C106+Verified+Location+Records;Division+-+District+-+Upazila+-+Union;2D+and+3D+Geo-Rendering+Ready;MIT+Licensed+-+Free+Forever" alt="Typing SVG"/>
 
-**[Dataset Overview](#-dataset-overview) · [2D / 3D Rendering Guide](#-2d--3d-geo-rendering) · [Quick Start](#-quick-start) · [Report an Issue](https://github.com/bayeziddev/Bangladesh-geocode/issues)**
+<img src="img/location-pulse.svg" width="150" alt="Animated location pulse" />
+
+<sub>📍 Real geo-rendering, not a placeholder — this pin is a live SVG animation shipped in this repo</sub>
+
+<br/><br/>
+
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+[![Stars](https://img.shields.io/github/stars/bayeziddev/Bangladesh-geocode?style=for-the-badge&color=006A4E)](https://github.com/bayeziddev/Bangladesh-geocode/stargazers)
+[![Forks](https://img.shields.io/github/forks/bayeziddev/Bangladesh-geocode?style=for-the-badge&color=F42A41)](https://github.com/bayeziddev/Bangladesh-geocode/network/members)
+[![Last Commit](https://img.shields.io/github/last-commit/bayeziddev/Bangladesh-geocode?style=for-the-badge)](https://github.com/bayeziddev/Bangladesh-geocode/commits/main)
+[![Sponsor](https://img.shields.io/badge/Sponsor-Support%20This%20Project-F42A41?style=for-the-badge)](#-sponsors)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](#-contributing)
+
+**[Dataset](#-dataset-overview) · [2D / 3D Rendering](#-2d--3d-geo-rendering) · [Quick Start](#-quick-start) · [Sponsors](#-sponsors) · [Issues](https://github.com/bayeziddev/Bangladesh-geocode/issues)**
 
 </div>
 
 <br/>
 
 <p align="center">
-  <img src="img/BD_Map_admin.svg" alt="Bangladesh administrative divisions map" width="560" />
+  <img src="img/BD_Map_admin.svg" alt="Bangladesh administrative divisions map" width="520" />
 </p>
 
 ---
@@ -39,7 +46,7 @@ Division → District → Upazila → Union, with bilingual names, coordinates, 
 - [Real-World Use Cases](#-real-world-use-cases)
 - [FAQ](#-faq)
 - [Contributing](#-contributing)
-- [Support This Project](#-support-this-project)
+- [Sponsors](#-sponsors)
 - [Author](#-author)
 - [License](#-license)
 
@@ -55,7 +62,7 @@ Division → District → Upazila → Union, with bilingual names, coordinates, 
 | 🌐 **Bilingual** | English *and* বাংলা (Bengali) names for every single entry |
 | 📍 **Real coordinates** | Latitude / longitude for all 64 districts |
 | 🗺️ **Boundary polygons** | GeoJSON `MultiPolygon` geometry for every district — not just names |
-| 🎨 **Vector map included** | Ready-to-use administrative SVG map of Bangladesh |
+| 🎨 **Vector map included** | Ready-to-use administrative SVG map |
 | 📦 **5 formats, zero lock-in** | CSV · JSON · SQL · PHP · XML |
 
 ---
@@ -157,7 +164,8 @@ Bangladesh-geocode/
 │   ├── districts.geojson.txt  64 district boundary polygons (full set)
 │   └── districts.geojson      1-feature sample
 ├── img/
-│   └── BD_Map_admin.svg       administrative vector map
+│   ├── BD_Map_admin.svg       administrative vector map
+│   └── location-pulse.svg     animated location-pin graphic (used in this README)
 └── README.md
 ```
 
@@ -329,14 +337,35 @@ Found incorrect data? [Open an issue](https://github.com/bayeziddev/Bangladesh-g
 
 ---
 
-## 💚 Support This Project
+## 💖 Sponsors
 
-If this dataset saved you time, consider supporting its upkeep:
+<div align="center">
 
-| Method | Details |
+### If this project helped you — or made you happy 😊 — consider supporting its upkeep
+
+*Every contribution, big or small, keeps this dataset accurate and free for everyone.*
+
+[![PayPal](https://img.shields.io/badge/PayPal-Donate-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://www.paypal.me/connectwithbayezid)
+
+**PayPal.me/connectwithbayezid**
+
+</div>
+
+GitHub also shows a native **❤️ Sponsor** button at the top of this repository — clicking it goes straight to the PayPal link above (powered by this repo's `.github/FUNDING.yml`).
+
+### 🇧🇩 Local Payment (Bangladesh)
+
+<div align="center">
+
+![bKash](https://img.shields.io/badge/bKash-01791527854-E2136E?style=for-the-badge)
+![Nagad](https://img.shields.io/badge/Nagad-01519601517-F0333B?style=for-the-badge)
+![Rocket](https://img.shields.io/badge/Rocket-01519601517-8B1874?style=for-the-badge)
+
+</div>
+
+| Method | Number |
 |---|---|
-| PayPal | [paypal.me/connectwithbayezid](https://www.paypal.me/connectwithbayezid) |
-| bKash | `01791527854` |
+| bKash (Personal) | `01791527854` |
 | Nagad | `01519601517` |
 | Rocket | `01519601517` |
 
@@ -344,9 +373,14 @@ If this dataset saved you time, consider supporting its upkeep:
 
 ## 👤 Author
 
+<div align="center">
+<img src="https://github.com/bayeziddev.png?size=90" width="72" style="border-radius:50%" alt="Sayad Md Bayezid Hosan"/>
+
 **Sayad Md Bayezid Hosan**
 
 [Portfolio](https://sayadbayezid.com) · [Verified Profiles](https://sayadbayezid.com/verified-profiles/) · [GitHub](https://github.com/bayeziddev)
+
+</div>
 
 ---
 
@@ -363,5 +397,7 @@ Released under the **MIT License** — free to use, modify, and distribute, incl
 **Made with 🩷 for Bangladesh developers, by [@bayeziddev](https://github.com/bayeziddev)**
 
 If this project helped you, **star the repo ⭐** — it helps others find it too.
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:F42A41,100:006A4E&height=120&section=footer&animation=fadeIn" width="100%" alt="footer wave"/>
 
 </div>
