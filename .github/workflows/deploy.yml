@@ -2,7 +2,7 @@ name: Deploy Static Repo with Rendered README
 
 on:
   push:
-    branches: ["main"] # master hole master diben
+    branches: ["main"]
   workflow_dispatch:
 
 permissions:
@@ -33,11 +33,18 @@ jobs:
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Bangladesh Geocode</title>
-            <!-- Zero-md script to render Markdown like GitHub -->
+            <!-- Zero-md script to render Markdown -->
             <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"></script>
             <style>
-              body { margin: 0; padding: 20px; background-color: #ffffff; }
-              .container { max-width: 900px; margin: 0 auto; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 8px; }
+              /* Mobile first CSS */
+              body { margin: 0; background-color: #ffffff; }
+              .container { max-width: 980px; margin: 0 auto; padding: 15px; }
+              
+              /* Desktop and tablet CSS */
+              @media (min-width: 768px) {
+                body { background-color: #f6f8fa; padding: 30px; }
+                .container { padding: 40px; background-color: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.12); border-radius: 8px; border: 1px solid #e1e4e8; }
+              }
             </style>
           </head>
           <body>
