@@ -1,8 +1,8 @@
-name: Deploy GitHub Pages (Jekyll)
+name: Deploy Static Repo with Rendered README
 
 on:
   push:
-    branches: ["main"] # master branch hole 'master' likhben
+    branches: ["main"] # master hole master diben
   workflow_dispatch:
 
 permissions:
@@ -15,33 +15,47 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-        
-      - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v1
-        with:
-          source: ./
-          destination: ./_site
-          
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./_site
-
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create Real HTML Index
+        run: |
+          cat << 'EOF' > index.html
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Bangladesh Geocode</title>
+            <!-- Zero-md script to render Markdown like GitHub -->
+            <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"></script>
+            <style>
+              body { margin: 0; padding: 20px; background-color: #ffffff; }
+              .container { max-width: 900px; margin: 0 auto; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 8px; }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <zero-md src="README.md"></zero-md>
+            </div>
+          </body>
+          </html>
+          EOF
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
