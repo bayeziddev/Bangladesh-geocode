@@ -18,9 +18,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: packages/bangladesh-geo-data
+    # Removed the working-directory block so commands run in the root directory
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -46,7 +44,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: bangladesh-geo-data-dist
-          path: packages/bangladesh-geo-data/dist/
+          # Changed to target the dist directory in the root
+          path: dist/
 
   publish:
     if: startsWith(github.ref, 'refs/tags/bangladesh-geo-data-v') || (github.event_name == 'workflow_dispatch' && inputs.publish == true)
@@ -66,8 +65,7 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           # PyPI requires the literal string '__token__' when using an API token.
-          # Your identity (Sayadbayezid) is verified via the token itself.
+          # Your identity (sayadbayezid) is verified via the token itself.
           user: __token__ 
           password: ${{ secrets.PYPI_MY_PROJECT_TOKEN }}
-          # Explicitly pointing to the downloaded distributions folder
           packages-dir: dist/
