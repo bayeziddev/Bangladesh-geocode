@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#006A4E"><title>Getting Started · Bangladesh Geocode</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body><div class="shell">
+  <aside class="sidebar"><a class="brand" href="index.html"><img src="img/location-pulse.svg" alt="">Bangladesh Geocode</a><nav>
+    <div class="group"><div class="group-label">Guide</div><a href="index.html">Overview</a><a class="active" href="getting-started.html">Getting Started</a><a href="data-schema.html">Data Schema</a></div>
+    <div class="group"><div class="group-label">Using the Data</div><a href="usage-examples.html">Usage Examples</a><a href="geo-rendering.html">2D / 3D Rendering</a><a href="python-package.html">Python Package</a></div>
+    <div class="group"><div class="group-label">Project</div><a href="contributing.html">Contributing</a><a href="credits.html">Credits &amp; License</a></div>
+    <div class="group"><div class="group-label">Links</div><a href="https://github.com/bayeziddev/Bangladesh-geocode">GitHub Repository ↗</a><a href="https://pypi.org/project/bangladesh-geo-data/">PyPI Package ↗</a></div>
+  </nav></aside>
+  <main class="main"><div class="eyebrow">Guide / Setup</div><h1>Getting Started</h1><p class="lede">Choose the format that fits your stack. Every export is generated from the same four-level administrative hierarchy.</p>
+    <h2>Clone the repository</h2><pre><code>git clone https://github.com/bayeziddev/Bangladesh-geocode.git
+cd Bangladesh-geocode</code></pre>
+    <h2>Pick a data format</h2><table><thead><tr><th>Format</th><th>Best for</th><th>Path</th></tr></thead><tbody><tr><td>JSON</td><td>Web apps and APIs</td><td><code>divisions/divisions.json</code></td></tr><tr><td>CSV</td><td>Spreadsheets and pipelines</td><td><code>districts/districts.csv</code></td></tr><tr><td>SQL</td><td>Relational databases</td><td><code>upazilas/upazilas.sql</code></td></tr><tr><td>PHP</td><td>Simple PHP projects</td><td><code>unions/unions.php</code></td></tr><tr><td>XML</td><td>Legacy integrations</td><td><code>divisions/divisions.xml</code></td></tr></tbody></table>
+    <div class="callout"><strong>Tip:</strong> Keep the parent IDs when importing. They let you move from division to district to upazila to union without fuzzy name matching.</div>
+    <h2>Use the browser-ready GeoJSON</h2><pre><code>fetch('geojson/districts.geojson.txt')
+  .then(response =&gt; response.json())
+  .then(({ features }) =&gt; console.log(features.length));</code></pre>
+    <footer class="page-footer">Bangladesh Geocode is maintained on <a href="https://github.com/bayeziddev/Bangladesh-geocode">GitHub</a>.</footer>
+  </main>
+</div></body></html>

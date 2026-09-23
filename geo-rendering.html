@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#006A4E"><title>2D / 3D Rendering · Bangladesh Geocode</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/style.css"></head>
+<body><div class="shell"><aside class="sidebar"><a class="brand" href="index.html"><img src="img/location-pulse.svg" alt="">Bangladesh Geocode</a><nav><div class="group"><div class="group-label">Guide</div><a href="index.html">Overview</a><a href="getting-started.html">Getting Started</a><a href="data-schema.html">Data Schema</a></div><div class="group"><div class="group-label">Using the Data</div><a href="usage-examples.html">Usage Examples</a><a class="active" href="geo-rendering.html">2D / 3D Rendering</a><a href="python-package.html">Python Package</a></div><div class="group"><div class="group-label">Project</div><a href="contributing.html">Contributing</a><a href="credits.html">Credits &amp; License</a></div><div class="group"><div class="group-label">Links</div><a href="https://github.com/bayeziddev/Bangladesh-geocode">GitHub Repository ↗</a><a href="https://pypi.org/project/bangladesh-geo-data/">PyPI Package ↗</a></div></nav></aside><main class="main"><div class="eyebrow">Using the Data / Maps</div><h1>2D / 3D Rendering</h1><p class="lede">The full district-boundary collection is a standard GeoJSON FeatureCollection. Use it with Leaflet, MapLibre, Mapbox GL, D3, deck.gl, or QGIS.</p><h2>2D with Leaflet</h2><pre><code>fetch('geojson/districts.geojson.txt')
+  .then(res =&gt; res.json())
+  .then(data =&gt; L.geoJSON(data, {
+    style: { color: '#006A4E', weight: 1, fillOpacity: 0.5 },
+    onEachFeature: (feature, layer) =&gt;
+      layer.bindPopup(feature.properties.ADM2_EN)
+  }).addTo(map));</code></pre><h2>3D with deck.gl</h2><pre><code>new GeoJsonLayer({
+  id: 'bd-districts',
+  data: 'geojson/districts.geojson.txt',
+  extruded: true,
+  pickable: true,
+  getElevation: feature =&gt; feature.properties.metric ?? 20000,
+  getFillColor: [15, 157, 88, 180]
+});</code></pre><div class="callout"><strong>Large file note:</strong> The complete 64-feature boundary file is loaded on demand. Keep it as a static asset and cache it at the edge instead of embedding it in the page.</div><footer class="page-footer">The repository also includes <a href="img/BD_Map_admin.svg">an administrative SVG map</a> for lightweight static use.</footer></main></div></body></html>
