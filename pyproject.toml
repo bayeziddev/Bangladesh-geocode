@@ -38,4 +38,4 @@ Issues = "https://github.com/bayeziddev/Bangladesh-geocode/issues"
 where = ["src"]
 
 [tool.setuptools.package-data]
-"bangladesh_geo_data.data" = ["*.json", "*.geojson"]
+"bangladesh-geo-location-code.data" = ["*.json", "*.geojson"]
