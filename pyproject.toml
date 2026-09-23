@@ -38,4 +38,5 @@ Issues = "https://github.com/bayeziddev/Bangladesh-geocode/issues"
 where = ["src"]
 
 [tool.setuptools.package-data]
-"bangladesh-geo-data.data" = ["*.json", "*.geojson"]
+# Include all JSON and GeoJSON files found within the package directories
+"*" = ["*.json", "*.geojson"]
