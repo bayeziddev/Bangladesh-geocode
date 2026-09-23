@@ -1,9 +1,9 @@
-name: Publish bangladesh-geo-location-code to PyPI
+name: Publish bangladesh-geo-data to PyPI
 
 on:
   push:
     tags:
-      - "bangladesh-geo-location-code-v*"
+      - "bangladesh-geo-data-v*"
   workflow_dispatch:
     inputs:
       publish:
@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: packages/bangladesh-geo-location-code
+        working-directory: packages/bangladesh-geo-data
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -45,21 +45,21 @@ jobs:
       - name: Upload distributions
         uses: actions/upload-artifact@v4
         with:
-          name: bangladesh-geo-location-code-dist
-          path: packages/bangladesh-geo-location-code/dist/
+          name: bangladesh-geo-data-dist
+          path: packages/bangladesh-geo-data/dist/
 
   publish:
-    if: startsWith(github.ref, 'refs/tags/bangladesh-geo-location-code-v') || (github.event_name == 'workflow_dispatch' && inputs.publish == true)
+    if: startsWith(github.ref, 'refs/tags/bangladesh-geo-data-v') || (github.event_name == 'workflow_dispatch' && inputs.publish == true)
     needs: build
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/p/bangladesh-geo-location-code
+      url: https://pypi.org/p/bangladesh-geo-data
     steps:
       - name: Download distributions
         uses: actions/download-artifact@v4
         with:
-          name: bangladesh-geo-location-code-dist
+          name: bangladesh-geo-data-dist
           path: dist/
           
       - name: Publish to PyPI using API Token
