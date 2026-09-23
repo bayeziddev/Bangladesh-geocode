@@ -1,0 +1,231 @@
+/* Bangladesh Geocode — Developer Docs
+   Design tokens ---------------------------------------------------- */
+:root {
+  --green: #006A4E;
+  --green-bright: #0F9D58;
+  --red: #F42A41;
+  --ink: #10201A;
+  --bg: #FAFAF8;
+  --surface: #FFFFFF;
+  --border: #E3E7E3;
+  --muted: #5B6B63;
+  --link: #0B5D42;
+  --code-bg: #0E1512;
+  --code-ink: #DCEFE6;
+  --radius: 10px;
+  --sidebar-w: 250px;
+  --content-max: 760px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Space Grotesk', 'IBM Plex Sans', sans-serif;
+  font-weight: 600;
+  line-height: 1.22;
+  color: var(--ink);
+  margin: 0 0 0.5em;
+}
+
+h1 { font-size: 2.35rem; letter-spacing: -0.01em; }
+h2 { font-size: 1.5rem; margin-top: 2.4em; padding-top: 0.6em; border-top: 1px solid var(--border); }
+h3 { font-size: 1.15rem; margin-top: 1.8em; }
+p  { margin: 0 0 1.1em; max-width: var(--content-max); }
+a  { color: var(--link); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { color: var(--green-bright); }
+
+code, pre, kbd {
+  font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+code {
+  background: #EEF2EF;
+  color: #133D2E;
+  padding: 0.14em 0.4em;
+  border-radius: 5px;
+  font-size: 0.87em;
+}
+
+pre {
+  background: var(--code-bg);
+  color: var(--code-ink);
+  padding: 1.1em 1.3em;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  max-width: var(--content-max);
+  font-size: 0.87rem;
+  line-height: 1.6;
+}
+pre code { background: none; color: inherit; padding: 0; font-size: 1em; }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: var(--content-max);
+  margin: 1.4em 0;
+  font-size: 0.93rem;
+}
+th, td {
+  text-align: left;
+  padding: 0.6em 0.8em;
+  border-bottom: 1px solid var(--border);
+}
+th { color: var(--muted); font-weight: 600; font-size: 0.82rem; }
+
+/* Layout ------------------------------------------------------------ */
+.shell {
+  display: flex;
+  min-height: 100vh;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.sidebar {
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  padding: 2rem 1.3rem;
+  border-right: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebar .brand {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 1.02rem;
+  color: var(--ink);
+  text-decoration: none;
+  margin-bottom: 1.7rem;
+}
+.sidebar .brand img { width: 26px; height: 26px; }
+
+.sidebar nav .group { margin-bottom: 1.4rem; }
+.sidebar nav .group-label {
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  padding-left: 0.6rem;
+}
+.sidebar nav a {
+  display: block;
+  padding: 0.4rem 0.6rem;
+  border-radius: 7px;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 0.91rem;
+}
+.sidebar nav a:hover { background: #EEF2EF; }
+.sidebar nav a.active { background: var(--green); color: #fff; }
+
+.main {
+  flex: 1;
+  min-width: 0;
+  padding: 2.6rem 3rem 6rem;
+}
+
+.eyebrow {
+  color: var(--green);
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+}
+
+.lede {
+  font-size: 1.15rem;
+  color: var(--muted);
+  max-width: var(--content-max);
+}
+
+/* Components ---------------------------------------------------------- */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  max-width: var(--content-max);
+  margin: 1.6rem 0 2rem;
+}
+.stat-row .stat { background: var(--surface); padding: 1.1rem 1rem; }
+.stat .num { font-family: 'Space Grotesk', sans-serif; font-size: 1.7rem; font-weight: 600; color: var(--green); display: block; }
+.stat .label { font-size: 0.8rem; color: var(--muted); }
+
+.callout {
+  border-left: 3px solid var(--green);
+  background: #F0F6F3;
+  padding: 0.9rem 1.1rem;
+  border-radius: 0 8px 8px 0;
+  max-width: var(--content-max);
+  margin: 1.3em 0;
+  font-size: 0.95rem;
+}
+.callout.warn { border-color: var(--red); background: #FDF1F1; }
+
+.grid-links {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.9rem;
+  max-width: var(--content-max);
+  margin: 1.5rem 0;
+}
+.grid-links a {
+  display: block;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.9rem 1rem;
+  text-decoration: none;
+  color: var(--ink);
+}
+.grid-links a:hover { border-color: var(--green); }
+.grid-links .t { font-family: 'Space Grotesk', sans-serif; font-weight: 600; display: block; margin-bottom: 0.2rem; }
+.grid-links .d { font-size: 0.85rem; color: var(--muted); }
+
+#map {
+  height: 420px;
+  max-width: var(--content-max);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  margin: 1.4rem 0;
+}
+
+.badge-row img { margin: 0 0.25rem 0.4rem 0; }
+
+footer.page-footer {
+  max-width: var(--content-max);
+  margin-top: 3.5rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 860px) {
+  .shell { flex-direction: column; }
+  .sidebar { width: 100%; height: auto; position: relative; border-right: none; border-bottom: 1px solid var(--border); }
+  .main { padding: 1.8rem 1.3rem 4rem; }
+  .stat-row, .grid-links { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
