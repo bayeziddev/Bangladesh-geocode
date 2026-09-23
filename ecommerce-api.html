@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#006A4E">
+  <title>Ecommerce Checkout &amp; API · Bangladesh Geocode</title>
+  <meta name="description" content="Integrate Bangladesh Geocode with ecommerce checkout forms, cascading Bangladesh locations, postcode lookup, and custom APIs.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body><div class="shell">
+  <aside class="sidebar"><a class="brand" href="index.html"><img src="img/location-pulse.svg" alt="">Bangladesh Geocode</a><nav>
+    <div class="group"><div class="group-label">Guide</div><a href="index.html">Overview</a><a href="getting-started.html">Getting Started</a><a href="data-schema.html">Data Schema</a></div>
+    <div class="group"><div class="group-label">Using the Data</div><a href="usage-examples.html">Usage Examples</a><a href="geo-rendering.html">2D / 3D Rendering</a><a href="python-package.html">Python Package</a><a class="active" href="ecommerce-api.html">Ecommerce &amp; API</a></div>
+    <div class="group"><div class="group-label">Project</div><a href="contributing.html">Contributing</a><a href="credits.html">Credits &amp; License</a></div>
+    <div class="group"><div class="group-label">Links</div><a href="https://github.com/bayeziddev/Bangladesh-geocode">GitHub Repository ↗</a><a href="https://github.com/bayeziddev/Bangladesh-geocode/blob/main/DEVELOPER_GUIDE.md">Developer Guide ↗</a><a href="https://github.com/bayeziddev/Bangladesh-geocode/blob/main/ECOMMERCE_API_GUIDE.md">Full API Guide ↗</a><a href="https://pypi.org/project/bangladesh-geo-data/">PyPI Package ↗</a></div>
+  </nav></aside>
+  <main class="main"><div class="eyebrow">Using the Data / Ecommerce</div><h1>Ecommerce Checkout &amp; API</h1>
+    <p class="lede">Connect Division → District → Upazila → Union fields to an ecommerce checkout, validate the address on your server, and add Bangladesh postcode lookup.</p>
+    <div class="callout"><strong>This project is a data package, not a hosted API.</strong> Use the repository files, install the <a href="python-package.html">Python package</a>, import the SQL exports, or expose your own API endpoints from your application.</div>
+    <h2>Recommended checkout flow</h2>
+    <pre><code>Division
+  ↓ division_id
+District
+  ↓ district_id
+Upazila
+  ↓ upazila_id
+Union
+  ↓ postcode lookup
+Address and delivery zone</code></pre>
+    <p>Use parent IDs for every relationship. Do not connect records by comparing English or Bengali names. Store the selected IDs and save the selected names as an order snapshot.</p>
+    <h2>Suggested API routes</h2>
+    <pre><code>GET /api/locations/divisions
+GET /api/locations/districts?division_id=6
+GET /api/locations/upazilas?district_id=1
+GET /api/locations/unions?upazila_id=1
+GET /api/locations/postcodes/1206
+POST /api/checkout/validate-address</code></pre>
+    <h2>Browser linking example</h2>
+    <pre><code>divisionSelect.addEventListener('change', () =&gt; {
+  const id = divisionSelect.value;
+  fillSelect(
+    districtSelect,
+    districts.filter(item =&gt; String(item.division_id) === id)
+  );
+});
+
+districtSelect.addEventListener('change', () =&gt; {
+  const id = districtSelect.value;
+  fillSelect(
+    upazilaSelect,
+    upazilas.filter(item =&gt; String(item.district_id) === id)
+  );
+});
+
+upazilaSelect.addEventListener('change', () =&gt; {
+  const id = upazilaSelect.value;
+  fillSelect(
+    unionSelect,
+    unions.filter(item =&gt; String(item.upazilla_id ?? item.upazila_id) === id)
+  );
+});</code></pre>
+    <h2>Python API example</h2>
+    <pre><code>from bangladesh_geo_data import (
+    get_districts,
+    get_postcodes,
+    get_upazilas,
+    get_unions,
+)
+
+districts = get_districts(division_id=6)
+upazilas = get_upazilas(district_id=1)
+unions = get_unions(upazila_id=1)
+postcode = get_postcodes(1206)</code></pre>
+    <h2>Server-side validation</h2>
+    <p>Browser validation is only a user-interface feature. Before creating an order, the backend must verify that the district belongs to the selected division, the upazila belongs to the district, and the union belongs to the upazila. It should also normalize the postcode, check delivery coverage, calculate shipping on the server, and store the final address snapshot.</p>
+    <h2>Postcode and delivery zones</h2>
+    <p>A postcode identifies a postal area; it does not prove that a street address is valid or that a courier serves it. Use <code>get_postcodes()</code> or your own imported postcode table for lookup, then apply your store’s delivery-zone, shipping-fee, and estimated-delivery rules.</p>
+    <h2>Continue reading</h2>
+    <p>See the <a href="getting-started.html">Getting Started</a> page for data formats, the <a href="data-schema.html">Data Schema</a> page for field definitions, the <a href="python-package.html">Python Package</a> page for installation, and the <a href="https://github.com/bayeziddev/Bangladesh-geocode/blob/main/ECOMMERCE_API_GUIDE.md">full Ecommerce API Guide ↗</a> for FastAPI, Flask, Django, PHP, SQL, caching, security, and production examples.</p>
+    <footer class="page-footer">Need to correct a location record? <a href="https://github.com/bayeziddev/Bangladesh-geocode/issues">Open an issue on GitHub ↗</a>.</footer>
+  </main>
+</div></body></html>
