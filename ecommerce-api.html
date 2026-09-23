@@ -61,6 +61,65 @@ upazilaSelect.addEventListener('change', () =&gt; {
     unions.filter(item =&gt; String(item.upazilla_id ?? item.upazila_id) === id)
   );
 });</code></pre>
+    <h2>Complete auto-fill checkout snippet</h2>
+    <p>Copy this example into a page served from the repository root, or change the five JSON paths to the location where your storefront serves the data files. The helper removes the phpMyAdmin metadata envelope before populating the selectors.</p>
+    <pre><code>&lt;form id="checkout-address"&gt;
+  &lt;select id="division" name="division_id" required&gt;&lt;/select&gt;
+  &lt;select id="district" name="district_id" required disabled&gt;&lt;/select&gt;
+  &lt;select id="upazila" name="upazila_id" required disabled&gt;&lt;/select&gt;
+  &lt;input id="postcode" name="postcode" inputmode="numeric"
+         autocomplete="postal-code" placeholder="Postcode" required&gt;
+&lt;/form&gt;
+
+const sources = {
+  divisions: 'divisions/divisions.json',
+  districts: 'districts/districts.json',
+  upazilas: 'upazilas/upazilas.json',
+  postcodes: 'postcode-bd/postcode.json',
+};
+
+const records = value =&gt; {
+  const table = value.find(item =&gt; Array.isArray(item.data));
+  return table ? table.data : value;
+};
+
+const response = await Promise.all(
+  Object.values(sources).map(path =&gt; fetch(path).then(r =&gt; r.json()))
+);
+const [divisions, districts, upazilas, postcodes] = response;
+
+function setOptions(select, rows, placeholder) {
+  select.replaceChildren(new Option(placeholder, ''));
+  for (const row of rows) select.add(new Option(row.name, row.id));
+  select.disabled = rows.length === 0;
+}
+
+const division = document.querySelector('#division');
+const district = document.querySelector('#district');
+const upazila = document.querySelector('#upazila');
+const postcode = document.querySelector('#postcode');
+setOptions(division, records(divisions), 'Select division');
+
+division.addEventListener('change', () =&gt; {
+  setOptions(district, records(districts).filter(row =&gt;
+    String(row.division_id) === division.value
+  ), 'Select district');
+  setOptions(upazila, [], 'Select upazila');
+});
+
+district.addEventListener('change', () =&gt; {
+  setOptions(upazila, records(upazilas).filter(row =&gt;
+    String(row.district_id) === district.value
+  ), 'Select upazila');
+});
+
+postcode.addEventListener('change', () =&gt; {
+  const found = Object.keys(postcodes).some(key =&gt;
+    key.trim() === postcode.value.trim()
+  );
+  postcode.setCustomValidity(found ? '' : 'Postcode not found');
+});</code></pre>
+    <p>The browser snippet provides dynamic population and basic postcode feedback. Before placing an order, repeat the parent-child and postcode-to-district checks on your backend as described in the <a href="https://github.com/bayeziddev/Bangladesh-geocode/blob/main/ECOMMERCE_API_GUIDE.md">full API guide ↗</a>.</p>
     <h2>Python API example</h2>
     <pre><code>from bangladesh_geo_data import (
     get_districts,
