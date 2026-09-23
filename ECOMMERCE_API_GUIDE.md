@@ -52,6 +52,8 @@ For a checkout, the safest general design is to load options in the browser for 
 
 The simplest browser integration reads the repository JSON files and filters child options whenever a parent changes. The following example assumes that the checkout page is served from the repository root or that the JSON files are copied into your own public assets directory.
 
+The repository also includes a reusable, tested implementation at [`assets/checkout-autofill.mjs`](assets/checkout-autofill.mjs). Its automated tests are in [`tests/frontend/checkout-autofill.test.mjs`](tests/frontend/checkout-autofill.test.mjs) and can be run with `node --test tests/frontend/checkout-autofill.test.mjs`.
+
 ```html
 <label>
   Division
