@@ -1,32 +1,45 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "bangladesh-geo-data"
 version = "0.1.0"
-description = "Offline Bangladesh administrative geography: Division, District, Upazila, Union — bilingual, with coordinates and GeoJSON district boundaries."
-readme = "README.md"
+description = "Offline Bangladesh administrative geography with bilingual records, postal codes, and district GeoJSON boundaries."
+readme = "PYPI-README.md"
 license = "MIT"
+license-files = ["LICENSE"]
 authors = [
     { name = "Sayad Md Bayezid Hosan" }
 ]
 requires-python = ">=3.9"
 keywords = [
-    "bangladesh", "geocode", "geodata", "geojson", "division", "district",
-    "upazila", "union", "administrative-boundaries", "bangla"
+    "bangladesh", "geocode", "geodata", "geojson", "postal-code", "postcode",
+    "division", "district", "upazila", "union", "administrative-boundaries", "bangla"
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Scientific/Engineering :: GIS",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Natural Language :: English",
     "Natural Language :: Bengali",
 ]
 dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "build>=1.2",
+    "pytest>=8",
+    "twine>=5",
+]
 
 [project.urls]
 Homepage = "https://github.com/bayeziddev/Bangladesh-geocode"
@@ -38,5 +51,4 @@ Issues = "https://github.com/bayeziddev/Bangladesh-geocode/issues"
 where = ["src"]
 
 [tool.setuptools.package-data]
-# Include all JSON and GeoJSON files found within the package directories
-"*" = ["*.json", "*.geojson"]
+bangladesh_geo_data = ["data/*.json", "data/*.geojson"]
