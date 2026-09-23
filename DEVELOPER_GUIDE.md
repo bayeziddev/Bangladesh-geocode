@@ -2,6 +2,8 @@
 
 This guide explains how to work on the Bangladesh Geocode repository, use its data exports, develop the Python package, run validation locally, and publish a release to PyPI. The project is an offline data distribution. It does not run a web service and it does not require API credentials at runtime.
 
+For ecommerce checkout integration, cascading address selectors, postal-code lookup, custom REST endpoints, and backend validation examples, see the [Ecommerce and API Guide](ECOMMERCE_API_GUIDE.md).
+
 ## Project scope
 
 The repository contains Bangladesh administrative geography at four levels:
