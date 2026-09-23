@@ -3,13 +3,14 @@
 Offline, dependency-free Python access to Bangladesh's administrative geography — **Division → District → Upazila → Union** — bilingual (English + বাংলা), with district coordinates and GeoJSON boundary polygons for mapping.
 
 ```bash
-pip install bangladesh-geo-location-code
+pip install bangladesh-geo-data
+
 ```
 
 ## Quick start
 
 ```python
-import bangladesh-geo-location-code as bd
+import bangladesh-geo-data as bd
 
 bd.get_divisions()                      # 8 divisions
 bd.get_districts(division_id=6)         # districts in a given division
