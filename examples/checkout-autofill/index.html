@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bangladesh Checkout Auto-fill Example</title>
+  <style>
+    body { max-width: 720px; margin: 2rem auto; padding: 0 1rem; font: 16px system-ui, sans-serif; }
+    label { display: block; margin-top: 1rem; font-weight: 600; }
+    select, input { width: 100%; padding: .7rem; margin-top: .35rem; font: inherit; }
+    #status { margin-top: 1rem; padding: .75rem; background: #eef8f3; }
+  </style>
+</head>
+<body>
+  <h1>Bangladesh checkout address</h1>
+  <p>This copy-paste example loads the repository JSON files directly. See the folder README for the PyPI backend option.</p>
+
+  <form id="checkout-form">
+    <label>Division
+      <select id="division" name="division_id" required></select>
+    </label>
+    <label>District
+      <select id="district" name="district_id" required disabled></select>
+    </label>
+    <label>Upazila
+      <select id="upazila" name="upazila_id" required disabled></select>
+    </label>
+    <label>Union
+      <select id="union" name="union_id" required disabled></select>
+    </label>
+    <label>Postcode
+      <input id="postcode" name="postcode" inputmode="numeric" autocomplete="postal-code" required>
+    </label>
+    <label>Address
+      <input name="address_line" autocomplete="street-address" required>
+    </label>
+    <button type="submit">Continue checkout</button>
+  </form>
+  <p id="status" role="status">Loading location data…</p>
+
+  <script>
+    const DATA = {
+      divisions: '../../divisions/divisions.json',
+      districts: '../../districts/districts.json',
+      upazilas: '../../upazilas/upazilas.json',
+      unions: '../../unions/unions.json',
+      postcodes: '../../postcode-bd/postcode.json'
+    };
+
+    const $ = id => document.querySelector(id);
+    const records = value => {
+      const table = Array.isArray(value) && value.find(item => Array.isArray(item.data));
+      return table ? table.data : value;
+    };
+    const fill = (select, rows, label) => {
+      select.replaceChildren(new Option(label, ''));
+      rows.forEach(row => select.add(new Option(row.name, row.id)));
+      select.disabled = rows.length === 0;
+    };
+    const reset = (select, label) => fill(select, [], label);
+
+    async function loadCheckoutData() {
+      const values = await Promise.all(
+        Object.values(DATA).map(path => fetch(path).then(response => {
+          if (!response.ok) throw new Error(`Could not load ${path}`);
+          return response.json();
+        }))
+      );
+      const [divisionData, districtData, upazilaData, unionData, postcodeData] = values;
+      const divisions = records(divisionData);
+      const districts = records(districtData);
+      const upazilas = records(upazilaData);
+      const unions = records(unionData);
+
+      fill($('#division'), divisions, 'Select division');
+      reset($('#district'), 'Select district');
+      reset($('#upazila'), 'Select upazila');
+      reset($('#union'), 'Select union');
+      $('#status').textContent = 'Ready. Select a division.';
+
+      $('#division').addEventListener('change', event => {
+        const id = event.target.value;
+        fill($('#district'), districts.filter(row => String(row.division_id) === id), 'Select district');
+        reset($('#upazila'), 'Select upazila');
+        reset($('#union'), 'Select union');
+      });
+      $('#district').addEventListener('change', event => {
+        const id = event.target.value;
+        fill($('#upazila'), upazilas.filter(row => String(row.district_id) === id), 'Select upazila');
+        reset($('#union'), 'Select union');
+      });
+      $('#upazila').addEventListener('change', event => {
+        const id = event.target.value;
+        fill($('#union'), unions.filter(row => String(row.upazilla_id ?? row.upazila_id) === id), 'Select union');
+      });
+      $('#postcode').addEventListener('change', event => {
+        const wanted = event.target.value.trim();
+        const match = Object.keys(postcodeData).find(key => key.trim() === wanted);
+        event.target.setCustomValidity(match ? '' : 'Postcode not found');
+        $('#status').textContent = match ? `Postcode ${wanted} found.` : 'Postcode not found.';
+      });
+      $('#checkout-form').addEventListener('submit', event => {
+        event.preventDefault();
+        if (!event.target.reportValidity()) return;
+        $('#status').textContent = 'Frontend validation passed. Validate the same IDs on your backend before creating the order.';
+      });
+    }
+
+    loadCheckoutData().catch(error => { $('#status').textContent = error.message; });
+  </script>
+</body>
+</html>
