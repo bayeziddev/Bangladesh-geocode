@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bangladesh-geo-data"
+version = "0.1.0"
+description = "Offline Bangladesh administrative geography: Division, District, Upazila, Union — bilingual, with coordinates and GeoJSON district boundaries."
+readme = "README.md"
+license = "MIT"
+authors = [
+    { name = "Sayad Md Bayezid Hosan" }
+]
+requires-python = ">=3.9"
+keywords = [
+    "bangladesh", "geocode", "geodata", "geojson", "division", "district",
+    "upazila", "union", "administrative-boundaries", "bangla"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Scientific/Engineering :: GIS",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Natural Language :: English",
+    "Natural Language :: Bengali",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/bayeziddev/Bangladesh-geocode"
+Documentation = "https://bayeziddev.github.io/Bangladesh-geocode/"
+Repository = "https://github.com/bayeziddev/Bangladesh-geocode"
+Issues = "https://github.com/bayeziddev/Bangladesh-geocode/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"bangladesh_geo_data.data" = ["*.json", "*.geojson"]
