@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bangladesh Geocode — Developer Docs</title>
+<meta name="description" content="Developer documentation for Bangladesh Geocode: an open dataset covering Division, District, Upazila and Union, with GeoJSON boundaries for 2D/3D rendering.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%2250%22 fill=%22%23006A4E%22/><rect width=%22100%22 height=%2250%22 y=%2250%22 fill=%22%23F42A41%22/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="shell">
+
+  <aside class="sidebar">
+    <a class="brand" href="index.html">
+      <img src="img/location-pulse.svg" alt="">
+      Bangladesh Geocode
+    </a>
+    <nav>
+      <div class="group">
+        <div class="group-label">Guide</div>
+        <a href="index.html" class="active">Overview</a>
+        <a href="getting-started.html">Getting Started</a>
+        <a href="data-schema.html">Data Schema</a>
+      </div>
+      <div class="group">
+        <div class="group-label">Using the Data</div>
+        <a href="usage-examples.html">Usage Examples</a>
+        <a href="geo-rendering.html">2D / 3D Rendering</a>
+        <a href="python-package.html">Python Package</a>
+      </div>
+      <div class="group">
+        <div class="group-label">Project</div>
+        <a href="contributing.html">Contributing</a>
+        <a href="credits.html">Credits &amp; License</a>
+      </div>
+      <div class="group">
+        <div class="group-label">Links</div>
+        <a href="https://github.com/bayeziddev/Bangladesh-geocode">GitHub Repository ↗</a>
+        <a href="https://pypi.org/project/bangladesh-geo-data/">PyPI Package ↗</a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="eyebrow">Developer Documentation</div>
+    <h1>Bangladesh Geocode</h1>
+    <p class="lede">The complete administrative hierarchy of Bangladesh — Division, District, Upazila, Union — bilingual, with real coordinates and district boundary polygons, ready to query, render, or <code>pip install</code>.</p>
+
+    <div class="stat-row">
+      <div class="stat"><span class="num">8</span><span class="label">Divisions</span></div>
+      <div class="stat"><span class="num">64</span><span class="label">Districts</span></div>
+      <div class="stat"><span class="num">494</span><span class="label">Upazilas</span></div>
+      <div class="stat"><span class="num">4,540</span><span class="label">Unions</span></div>
+    </div>
+
+    <h2>Live district map</h2>
+    <p>Rendered directly from <code>geojson/districts.geojson.txt</code> — the same file you can fetch and use in your own project. Click a district to see its name.</p>
+    <div id="map"></div>
+    <p class="lede" style="font-size:0.85rem">64 districts, colored by division. Zoom and pan are enabled.</p>
+
+    <h2>Where to go next</h2>
+    <div class="grid-links">
+      <a href="getting-started.html">
+        <span class="t">Getting Started</span>
+        <span class="d">Install via SQL, JSON, PHP, CSV, or pip — pick your stack.</span>
+      </a>
+      <a href="data-schema.html">
+        <span class="t">Data Schema</span>
+        <span class="d">Every column, every level, with real examples.</span>
+      </a>
+      <a href="geo-rendering.html">
+        <span class="t">2D / 3D Rendering</span>
+        <span class="d">Turn the GeoJSON into an actual map — flat or extruded.</span>
+      </a>
+      <a href="python-package.html">
+        <span class="t">Python Package</span>
+        <span class="d"><code>pip install bangladesh-geo-data</code> — the whole dataset, offline.</span>
+      </a>
+    </div>
+
+    <footer class="page-footer">
+      Maintained by <a href="https://github.com/bayeziddev">@bayeziddev</a> · Data originally compiled by <a href="https://github.com/nuhil/bangladesh-geocode">nuhil/bangladesh-geocode</a> · MIT Licensed
+    </footer>
+  </main>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  const map = L.map('map', { scrollWheelZoom: false }).setView([23.8, 90.4], 6.4);
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+    maxZoom: 12
+  }).addTo(map);
+
+  const divisionColors = {};
+  const palette = ['#006A4E', '#0F9D58', '#2E7D32', '#F57C00', '#F4B400', '#F42A41', '#8B1874', '#0B5D42'];
+  let colorIndex = 0;
+
+  fetch('geojson/districts.geojson.txt')
+    .then(res => res.json())
+    .then(geojson => {
+      L.geoJSON(geojson, {
+        style: feature => {
+          const div = feature.properties.ADM1_EN;
+          if (!(div in divisionColors)) {
+            divisionColors[div] = palette[colorIndex % palette.length];
+            colorIndex++;
+          }
+          return { color: '#00402F', weight: 1, fillColor: divisionColors[div], fillOpacity: 0.55 };
+        },
+        onEachFeature: (feature, layer) => {
+          layer.bindPopup(`<strong>${feature.properties.ADM2_EN}</strong><br>${feature.properties.ADM1_EN} Division`);
+          layer.on('mouseover', () => layer.setStyle({ fillOpacity: 0.85 }));
+          layer.on('mouseout', () => layer.setStyle({ fillOpacity: 0.55 }));
+        }
+      }).addTo(map);
+    })
+    .catch(() => {
+      document.getElementById('map').innerHTML =
+        '<p style="padding:1rem;color:#5B6B63">Map data loads once this site is live on GitHub Pages (it fetches geojson/districts.geojson.txt from the same repo).</p>';
+    });
+</script>
+</body>
+</html>
