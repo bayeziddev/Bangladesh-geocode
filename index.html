@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#006A4E">
 <title>Bangladesh Geocode — Developer Docs</title>
 <meta name="description" content="Developer documentation for Bangladesh Geocode: an open dataset covering Division, District, Upazila and Union, with GeoJSON boundaries for 2D/3D rendering.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%2250%22 fill=%22%23006A4E%22/><rect width=%22100%22 height=%2250%22 y=%2250%22 fill=%22%23F42A41%22/></svg>">
@@ -60,8 +61,8 @@
 
     <h2>Live district map</h2>
     <p>Rendered directly from <code>geojson/districts.geojson.txt</code> — the same file you can fetch and use in your own project. Click a district to see its name.</p>
-    <div id="map"></div>
-    <p class="lede" style="font-size:0.85rem">64 districts, colored by division. Zoom and pan are enabled.</p>
+    <div id="map" aria-label="Interactive map of Bangladesh districts"></div>
+    <p class="map-note">64 districts, colored by division. Zoom and pan are enabled.</p>
 
     <h2>Where to go next</h2>
     <div class="grid-links">
