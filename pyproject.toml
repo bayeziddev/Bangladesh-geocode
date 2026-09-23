@@ -3,7 +3,7 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "bangladesh-geo-data"
+name = "bangladesh-geo-location-code"
 version = "0.1.0"
 description = "Offline Bangladesh administrative geography: Division, District, Upazila, Union — bilingual, with coordinates and GeoJSON district boundaries."
 readme = "README.md"
