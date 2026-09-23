@@ -30,6 +30,21 @@ Union
   ↓ postcode lookup
 Address and delivery zone</code></pre>
     <p>Use parent IDs for every relationship. Do not connect records by comparing English or Bengali names. Store the selected IDs and save the selected names as an order snapshot.</p>
+    <h2 id="live-demo">Live checkout auto-fill demo</h2>
+    <p>Use the controls below to test the cascade. Each child list is filtered by the selected parent ID. The postcode field checks the bundled Bangladesh postcode data.</p>
+    <div class="callout">
+      <label for="demo-division">Division</label>
+      <select id="demo-division"><option>Loading divisions…</option></select>
+      <label for="demo-district">District</label>
+      <select id="demo-district" disabled><option>Select a division first</option></select>
+      <label for="demo-upazila">Upazila</label>
+      <select id="demo-upazila" disabled><option>Select a district first</option></select>
+      <label for="demo-union">Union</label>
+      <select id="demo-union" disabled><option>Select an upazila first</option></select>
+      <label for="demo-postcode">Postcode</label>
+      <input id="demo-postcode" inputmode="numeric" placeholder="Example: 1206">
+      <p id="demo-status" role="status">Loading checkout data…</p>
+    </div>
     <h2>Suggested API routes</h2>
     <pre><code>GET /api/locations/divisions
 GET /api/locations/districts?division_id=6
@@ -141,4 +156,57 @@ postcode = get_postcodes(1206)</code></pre>
     <p>See the <a href="getting-started.html">Getting Started</a> page for data formats, the <a href="data-schema.html">Data Schema</a> page for field definitions, the <a href="python-package.html">Python Package</a> page for installation, and the <a href="https://github.com/bayeziddev/Bangladesh-geocode/blob/main/ECOMMERCE_API_GUIDE.md">full Ecommerce API Guide ↗</a> for FastAPI, Flask, Django, PHP, SQL, caching, security, and production examples.</p>
     <footer class="page-footer">Need to correct a location record? <a href="https://github.com/bayeziddev/Bangladesh-geocode/issues">Open an issue on GitHub ↗</a>.</footer>
   </main>
-</div></body></html>
+</div>
+<script>
+(() => {
+  const paths = {
+    divisions: 'divisions/divisions.json',
+    districts: 'districts/districts.json',
+    upazilas: 'upazilas/upazilas.json',
+    unions: 'unions/unions.json',
+    postcodes: 'postcode-bd/postcode.json',
+  };
+  const division = document.querySelector('#demo-division');
+  const district = document.querySelector('#demo-district');
+  const upazila = document.querySelector('#demo-upazila');
+  const union = document.querySelector('#demo-union');
+  const postcode = document.querySelector('#demo-postcode');
+  const status = document.querySelector('#demo-status');
+  const rows = value => {
+    const table = Array.isArray(value) && value.find(item => Array.isArray(item.data));
+    return table ? table.data : value;
+  };
+  const fill = (select, items, label) => {
+    select.replaceChildren(new Option(label, ''));
+    items.forEach(item => select.add(new Option(item.name, item.id)));
+    select.disabled = items.length === 0;
+  };
+  const reset = (select, label) => fill(select, [], label);
+  const load = async () => {
+    const values = await Promise.all(Object.values(paths).map(path => fetch(path).then(r => r.json())));
+    const [divisions, districts, upazilas, unions, postcodes] = values.map(rows);
+    fill(division, divisions, 'Select division');
+    reset(district, 'Select district');
+    reset(upazila, 'Select upazila');
+    reset(union, 'Select union');
+    status.textContent = 'Ready. Select a division to begin.';
+    division.addEventListener('change', () => {
+      fill(district, districts.filter(item => String(item.division_id) === division.value), 'Select district');
+      reset(upazila, 'Select upazila'); reset(union, 'Select union');
+    });
+    district.addEventListener('change', () => {
+      fill(upazila, upazilas.filter(item => String(item.district_id) === district.value), 'Select upazila');
+      reset(union, 'Select union');
+    });
+    upazila.addEventListener('change', () => {
+      fill(union, unions.filter(item => String(item.upazilla_id ?? item.upazila_id) === upazila.value), 'Select union');
+    });
+    postcode.addEventListener('change', () => {
+      const wanted = postcode.value.trim();
+      const match = Object.keys(postcodes).find(key => key.trim() === wanted);
+      status.textContent = match ? `Postcode ${wanted} found in the bundled dataset.` : 'Postcode not found.';
+    });
+  };
+  load().catch(error => { status.textContent = `Demo data could not load: ${error.message}`; });
+})();
+</script></body></html>
