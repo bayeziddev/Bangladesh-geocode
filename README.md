@@ -13,7 +13,7 @@
 <sub>📍 Real geo-rendering, not a placeholder — this pin is a live SVG animation shipped in this repo</sub>
 
 <br/><br/>
-<a href="https://deepwiki.com/bayeziddev/Bangladesh-geocode"><img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki"></a>
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/bayeziddev/Bangladesh-geocode)
 
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![Stars](https://img.shields.io/github/stars/bayeziddev/Bangladesh-geocode?style=for-the-badge&color=006A4E)](https://github.com/bayeziddev/Bangladesh-geocode/stargazers)
